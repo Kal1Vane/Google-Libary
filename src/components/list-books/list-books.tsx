@@ -1,24 +1,22 @@
-import axios from "axios";
-import { useEffect, useState } from "react"
+import { dataApi } from "../../services/data-services";
+import { BooksItem } from "../../types";
 
-function ListBooks() :JSX.Element {
-  const [books,setBooks] = useState<any | null>(null);
+function ListBooks(): JSX.Element {
+  const { data, isLoading } = dataApi.useFetchFindBooksQuery("Harry Potter");
 
-  useEffect(() => {
-    async function fetchData(){
-      const {data} = await axios.get("https://www.googleapis.com/books/v1/volumes?q=harry+potter");
-      setBooks(data);
-    }
-
-    fetchData();
-  }, [])
-  
+  if (isLoading) {
+    return <h1>Loading.....</h1>;
+  }
 
   return (
     <div>
-      {books && books.items.map((item : any) => <li>{item.searchInfo.textSnippet}</li>)}
+      {data &&
+        data.items.map((item: BooksItem) => {
+          const { id, volumeInfo } = item;
+          return <li key={id}>{volumeInfo.title}</li>;
+        })}
     </div>
-  )
+  );
 }
 
 export default ListBooks;
