@@ -32,6 +32,10 @@ type VolumeInfo = {
   previewLink?: string,
   infoLink?: string,
   canonicalVolumeLink?: string,
+  imageLinks?: {
+    smallThumbnail: string,
+    thumbnail: string,
+  }
 }
 type SaleInfo = {
   country: string,

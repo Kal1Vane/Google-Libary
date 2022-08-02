@@ -13,7 +13,12 @@ function ListBooks(): JSX.Element {
       {data &&
         data.items.map((item: BooksItem) => {
           const { id, volumeInfo } = item;
-          return <li key={id}>{volumeInfo.title}</li>;
+          return (
+            <li key={id}>
+              <h3>{volumeInfo.title}</h3>
+              {volumeInfo.imageLinks?.thumbnail && <div><img src={volumeInfo.imageLinks?.thumbnail} width="100" height={100} /></div>}
+            </li>
+          );
         })}
     </div>
   );
